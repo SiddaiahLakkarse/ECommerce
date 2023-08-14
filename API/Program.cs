@@ -32,6 +32,8 @@ builder.Services.AddCors(opt =>
 
 var app = builder.Build();
 
+app.UseStatusCodePagesWithReExecute("/errors/{0}");
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
