@@ -1,3 +1,4 @@
+using API.Middleware;
 using Core.Interfaces;
 using Infrastructure.Data;
 using Infrastructure.Repositories;
@@ -35,6 +36,9 @@ var app = builder.Build();
 app.UseStatusCodePagesWithReExecute("/errors/{0}");
 
 // Configure the HTTP request pipeline.
+
+app.UseMiddleware<ExceptionMiddleware>();
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
