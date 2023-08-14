@@ -1,9 +1,14 @@
+using API.Errors;
+using Infrastructure.Data;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+
 namespace API.Controllers
 {
     public class BuggyController : BaseApiController
     {
-        private readonly StoreContext _context;
-        public BuggyController(StoreContext context)
+        private readonly DataContext _context;
+        public BuggyController(DataContext context)
         {
             _context = context;
         }
