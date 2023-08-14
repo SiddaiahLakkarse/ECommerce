@@ -4,6 +4,8 @@ namespace API.Controllers;
 
 [ApiController]
 [Route("[controller]")] //https://localhost:5001/weatherforecast
+[ApiExplorerSettings(IgnoreApi = true)]
+
 public class WeatherForecastController : ControllerBase
 {
     private static readonly string[] Summaries = new[]
