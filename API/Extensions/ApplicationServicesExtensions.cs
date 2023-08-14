@@ -30,27 +30,36 @@ namespace API.Extensions
       {
         opt.AddPolicy("CorsPolicy", policy =>
   {
-            policy.AllowAnyMethod().AllowAnyHeader().WithOrigins("http://localhost:5001");
-          });
+    policy.AllowAnyMethod().AllowAnyHeader().WithOrigins("http://localhost:5001");
+  });
       });
 
       services.Configure<ApiBehaviorOptions>(options =>
                  {
                    options.InvalidModelStateResponseFactory = actionContext =>
              {
-                       var errors = actionContext.ModelState
-                     .Where(e => e.Value.Errors.Count > 0)
-                     .SelectMany(x => x.Value.Errors)
-                     .Select(x => x.ErrorMessage).ToArray();
+               var errors = actionContext.ModelState
+             .Where(e => e.Value.Errors.Count > 0)
+             .SelectMany(x => x.Value.Errors)
+             .Select(x => x.ErrorMessage).ToArray();
 
-                       var errorResponse = new ApiValidationErrorResponse
-                       {
-                         Errors = errors
-                       };
+               var errorResponse = new ApiValidationErrorResponse
+               {
+                 Errors = errors
+               };
 
-                       return new BadRequestObjectResult(errorResponse);
-                     };
+               return new BadRequestObjectResult(errorResponse);
+             };
                  });
+
+      services.AddCors(opt =>
+      {
+        opt.AddPolicy("CorsPolicy", policy =>
+                    {
+                      policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:4200");
+                    });
+      });
+
       return services;
     }
   }
