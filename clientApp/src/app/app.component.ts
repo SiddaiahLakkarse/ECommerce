@@ -11,19 +11,9 @@ import { Pagination } from './shared/models/pagination';
 export class AppComponent implements OnInit {
   title = 'Skinet';
 
-  products: Product[] = [];
-
   constructor(private http: HttpClient) { }
 
   ngOnInit(): void {
-    this.http.get<Pagination<Product[]>>("https://localhost:5001/api/products?pageSize=10").subscribe({
-      next: (response) => this.products = response.data, //What to do next
-      error: error => console.log(error),
-      complete: () => {
-        console.log("request completed.")
-      },
-
-    });
 
   }
 

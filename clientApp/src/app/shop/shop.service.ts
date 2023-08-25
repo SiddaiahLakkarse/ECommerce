@@ -7,11 +7,11 @@ import { Product } from '../shared/models/product';
   providedIn: 'root'
 })
 export class ShopService {
-  baseUrl = 'http://localhost:5001/api/'
+  baseUrl = 'https://localhost:5001/api/'
 
   constructor(private http: HttpClient) { }
 
   getProducts() {
-    this.http.get<Pagination<Product[]>>(this.baseUrl + 'products');
+    return this.http.get<Pagination<Product[]>>(this.baseUrl + 'products');
   }
 }
