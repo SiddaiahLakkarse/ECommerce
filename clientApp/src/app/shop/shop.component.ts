@@ -21,4 +21,13 @@ export class ShopComponent implements OnInit {
     });
   }
 
+  onSortSelected(event: any) {
+  }
+
+  onSearch() {
+  }
+
+  onReset() {
+  }
+
 }
