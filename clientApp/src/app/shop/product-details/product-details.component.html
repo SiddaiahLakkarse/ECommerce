@@ -1,1 +1,37 @@
-<p>product-details works!</p>
+<div class="container py-4">
+  <div *ngIf="isLoading" class="text-center py-5" role="status">
+    <div class="spinner-border text-primary" aria-hidden="true"></div>
+    <p class="mt-2 text-muted">Loading product...</p>
+  </div>
+
+  <div *ngIf="errorMessage && !isLoading" class="alert alert-danger" role="alert">
+    {{ errorMessage }}
+    <a routerLink="/shop" class="alert-link ms-2">Return to shop</a>
+  </div>
+
+  <div *ngIf="product && !isLoading" class="row g-5">
+    <div class="col-md-6">
+      <img [src]="product.pictureUrl" [alt]="product.name" class="img-fluid product-image">
+    </div>
+    <div class="col-md-6">
+      <div class="text-uppercase text-muted mb-2">{{ product.productBrand }} · {{ product.productType }}</div>
+      <h1>{{ product.name }}</h1>
+      <p class="display-6 text-primary">{{ product.price | currency }}</p>
+      <p class="lead">{{ product.description }}</p>
+
+      <div class="d-flex align-items-center gap-3 mb-4">
+        <span class="fw-semibold">Quantity</span>
+        <div class="btn-group" role="group" aria-label="Product quantity">
+          <button class="btn btn-outline-secondary" type="button" (click)="decreaseQuantity()">-</button>
+          <span class="btn btn-outline-secondary quantity">{{ quantity }}</span>
+          <button class="btn btn-outline-secondary" type="button" (click)="increaseQuantity()">+</button>
+        </div>
+      </div>
+
+      <button class="btn btn-primary btn-lg" type="button" (click)="addToCart()">
+        <i class="fa fa-shopping-cart me-2"></i>Add to cart
+      </button>
+      <a routerLink="/shop" class="btn btn-link btn-lg">Continue shopping</a>
+    </div>
+  </div>
+</div>

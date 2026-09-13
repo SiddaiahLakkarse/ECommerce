@@ -27,12 +27,23 @@
         <app-paging-header [totalCount]="totalCount" [pageNumber]="shopParams.pageNumber"
           [pageSize]="shopParams.pageSize"></app-paging-header>
         <div class="d-flex mt-2">
-          <input (keyup.enter)="onSearch()" type="text" placeholder="Search" class="form-control me-2" #search>
+        <input (keyup.enter)="onSearch()" type="search" placeholder="Search products" class="form-control me-2" #search aria-label="Search products">
           <button (click)="onSearch()" class="btn btn-outline-primary mx-2">Search</button>
           <button (click)="onReset()" class="btn btn-outline-success">Reset</button>
         </div>
       </div>
-      <div class="row row-cols-3 g-3 mb-4">
+      <div *ngIf="isLoading" class="text-center py-5" role="status">
+        <div class="spinner-border text-primary" aria-hidden="true"></div>
+        <p class="mt-2 text-muted">Loading products...</p>
+      </div>
+      <div *ngIf="errorMessage && !isLoading" class="alert alert-danger" role="alert">
+        {{ errorMessage }}
+        <button class="btn btn-sm btn-outline-danger ms-3" type="button" (click)="getProducts()">Try again</button>
+      </div>
+      <div *ngIf="!isLoading && !errorMessage && !products.length" class="alert alert-info" role="status">
+        No products match your search or filters.
+      </div>
+      <div *ngIf="!isLoading && !errorMessage && products.length" class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-3 mb-4">
         <div class="col" *ngFor="let product of products">
           <app-product-item [product]="product"></app-product-item>
         </div>

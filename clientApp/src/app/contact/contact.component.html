@@ -1,0 +1,31 @@
+<div class="container py-4">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <div class="text-center mb-4">
+        <p class="text-uppercase text-primary fw-semibold mb-1">We are here to help</p>
+        <h1>Contact us</h1>
+        <p class="text-muted">Send us a message and our team will get back to you.</p>
+      </div>
+
+      <div *ngIf="submitted" class="alert alert-success" role="status">
+        Thanks for reaching out. We will respond as soon as possible.
+      </div>
+
+      <form *ngIf="!submitted" #contactForm="ngForm" (ngSubmit)="submit()" novalidate>
+        <div class="mb-3">
+          <label for="name" class="form-label">Name</label>
+          <input id="name" name="name" class="form-control" required ngModel>
+        </div>
+        <div class="mb-3">
+          <label for="email" class="form-label">Email</label>
+          <input id="email" name="email" type="email" class="form-control" required email ngModel>
+        </div>
+        <div class="mb-3">
+          <label for="message" class="form-label">Message</label>
+          <textarea id="message" name="message" class="form-control" rows="5" required ngModel></textarea>
+        </div>
+        <button class="btn btn-primary" type="submit" [disabled]="contactForm.invalid">Send message</button>
+      </form>
+    </div>
+  </div>
+</div>

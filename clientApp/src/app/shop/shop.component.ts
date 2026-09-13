@@ -27,6 +27,8 @@ export class ShopComponent implements OnInit {
 
   shopParams = new ShopParams();
   totalCount = 0;
+  isLoading = false;
+  errorMessage = '';
 
   constructor(private shopService: ShopService) { }
 
@@ -57,14 +59,22 @@ export class ShopComponent implements OnInit {
   }
 
   getProducts() {
+    this.isLoading = true;
+    this.errorMessage = '';
     this.shopService.getProducts(this.shopParams).subscribe({
       next: response => {
         this.products = response.data;
         this.shopParams.pageNumber = response.pageIndex;
         this.shopParams.pageSize = response.pageSize;
         this.totalCount = response.count;
+        this.isLoading = false;
       },
-      error: error => console.log(error)
+      error: () => {
+        this.products = [];
+        this.totalCount = 0;
+        this.isLoading = false;
+        this.errorMessage = 'Products could not be loaded. Please try again.';
+      }
     })
   }
 
@@ -85,13 +95,13 @@ export class ShopComponent implements OnInit {
   onBrandSelected(brandId: number) {
     this.shopParams.brandId = brandId;
     this.shopParams.pageNumber = 1;
-    this.getBrands();
+    this.getProducts();
   }
 
   onTypeSelected(typeId: number) {
     this.shopParams.typeId = typeId;
     this.shopParams.pageNumber = 1;
-    this.getTypes();
+    this.getProducts();
   }
 
   onSortSelected(event: any) {
